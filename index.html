@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>pdf.xlongwei.com</title>
+<style type="text/css">
+th {
+	text-align: left;
+}
+</style>
+<script src="//s.xlongwei.com/res/js/umeditor1_2_2/third-party/jquery.min.js"></script>
+<script type="text/javascript">
+var sizePrecision = 2;
+var jsonpUrl = "//b.xlongwei.com";
+function link(uri, text) {
+	return "<a target=\"_blank\" href=\""+uri+"\">" + text + "</a>";
+}
+function td(link) {
+	return "<td>" + link + "</td>";
+}
+function tr() {
+	var tr = "<tr>";
+	for (var i = 0; i < arguments.length; i++) {
+		tr += arguments[i];
+	}
+	return tr + "</tr>"
+}
+function humanSize(s) {
+	//使用全局变量配置精度
+	var p = sizePrecision + 1
+	var raw = s
+	//单位
+	var unit = new Array('B', 'K', 'M', 'G', 'T', 'P', 'E', 'Y')
+	var u = 0
+	//对大小连除至小于1024，记录次数
+	while (s >= 1024) {
+		s = s / 1024
+		u++
+	}
+	//太大则不加单位
+	if (u > unit.length) {
+		s = raw
+		u = 0
+	}
+	//除不尽，四舍五入
+	if (!Number.isInteger(s))
+		s += Math.pow(10, -p)
+	s = s.toString()
+	//保留有效数字
+	var l = s.indexOf('.')
+	if (l != -1)
+		s = s.substr(0, l + p)
+		//加单位
+	return s + unit[u]
+}
+</script>
+</head>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<th>pdf</th>
+				<th>pdfobject</th>
+				<th>pdfjs</th>
+				<th>size</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	<script type="text/javascript">
+		$.ajax({
+			url : jsonpUrl,
+			type : "GET",
+			dataType : "jsonp",
+			success : function(data) {
+				data.forEach(function(book) {
+					$("tbody").append(
+						tr(
+							td(link('./' + book.name, book.name)),
+							td(link('./pdfobject.html#' + book.name, book.name)),
+							td(link('./pdfjs.html#' + book.name, book.name)),
+							td(humanSize(book.size))
+						)
+					);
+				})
+			}
+		});
+	</script>
+</body>
+</html>
