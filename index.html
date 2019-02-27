@@ -3,19 +3,20 @@
 <head>
 <title>pdf.xlongwei.com</title>
 <style type="text/css">
-th {
+tr {
 	text-align: left;
 }
 </style>
-<script src="//s.xlongwei.com/res/js/umeditor1_2_2/third-party/jquery.min.js"></script>
+<script src="https://s.xlongwei.com/res/js/umeditor1_2_2/third-party/jquery.min.js"></script>
 <script type="text/javascript">
 var sizePrecision = 2;
-var jsonpUrl = "//b.xlongwei.com";
-function link(uri, text) {
-	return "<a target=\"_blank\" href=\""+uri+"\">" + text + "</a>";
-}
-function td(link) {
-	return "<td>" + link + "</td>";
+var jsonpUrl = "https://b.xlongwei.com";
+function td(book){
+	return !book ? "<td></td>" : "<td>"
+				+ (book.size < 1024000 ? ("<a target=\"_blank\" href=\"./pdfobject.html#"+book.name+"\" title=\"" + humanSize(book.size) + "\">" + book.name + "</a>")
+				: ("<a target=\"_blank\" href=\"./pdfjs.html#"+book.name+"\" title=\"" + humanSize(book.size) + "\">" + book.name + "</a>")
+				)
+			+ "</td>";
 }
 function tr() {
 	var tr = "<tr>";
@@ -23,6 +24,10 @@ function tr() {
 		tr += arguments[i];
 	}
 	return tr + "</tr>"
+}
+function sortb(book1, book2){
+	//return book1.size > book2.size ? 1 : -1;
+	return book1.name.localeCompare(book2.name);
 }
 function humanSize(s) {
 	//使用全局变量配置精度
@@ -55,34 +60,27 @@ function humanSize(s) {
 </script>
 </head>
 <body>
+<center>
 	<table>
-		<thead>
-			<tr>
-				<th title="好资源要下载">pdf</th>
-				<th title="小文件有书签">pdfobject</th>
-				<th title="大文件须分页">pdfjs</th>
-				<th>size</th>
-			</tr>
-		</thead>
 		<tbody>
 		</tbody>
 	</table>
+</center>
 	<script type="text/javascript">
 		$.ajax({
 			url : jsonpUrl,
 			type : "GET",
 			dataType : "jsonp",
 			success : function(data) {
-				data.forEach(function(book) {
+				data = data.sort(sortb);
+				for(i=0; i<data.length; i+=3){
+					book1 = data[i];
+					book2 = i+1<data.length ? data[i+1] : null;
+					book3 = i+2<data.length ? data[i+2] : null;
 					$("tbody").append(
-						tr(
-							td(link('./' + book.name, book.name)),
-							td(link('./pdfobject.html#' + book.name, book.name)),
-							td(link('./pdfjs.html#' + book.name, book.name)),
-							td(humanSize(book.size))
-						)
+						tr( td(book1), td(book2), td(book3) )
 					);
-				})
+				}
 			}
 		});
 	</script>
