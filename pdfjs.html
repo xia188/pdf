@@ -2,31 +2,23 @@
     <head>
 	<title>PDF.js</title>
 	<meta charset="utf-8"/>
-        <style type="text/css">
-            html,body {
-                width: 100%;
-                margin: 0;
-                padding: 0;
-                background-color: #444;
-            }
-
-            body {
-                display: flex;
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-        </style>
+	<style type="text/css">
+		button,input,span,a {
+			font-size:36px;
+		}
+	</style>
     </head>
-    <div style="width:100%;margin:5px;text-align:center;">
-        <button id="prev">Prev</button>
-        <button id="next">Next</button>
-	<input id="page_num" style="width:32px"> / <span id="page_count" style="background-color:white"></span>
+    <body>
+    <div style="width:100%;text-align:center;">
+        <button id="prev">Prev</button>&nbsp;<button id="next">Next</button>
+		<input id="page_num" style="width:69px"> / <span id="page_count" style="background-color:white">&nbsp;</span>
+		<a target="_blank" id="link">Link</a>
     </div>
-    <canvas id="the-canvas"></canvas>
+    <canvas id="the-canvas" style="width:100%"></canvas>
     <script src="./pdf.js"></script>
     <script>
         var url = (!location.hash||location.hash.length==1) ? "booklet.pdf" : location.hash.substring(1);
-     
+     	document.getElementById("link").href=url;
         var pdfDoc = null,
             pageNum = 1,
             pageRendering = false,
@@ -131,5 +123,17 @@
             // Initial/first page rendering
             renderPage(pageNum);
         });
+        
+        document.onkeydown = function(event){
+            var e = event || window.event || arguments.callee.caller.arguments[0];
+            if(!e) return;
+            if(e.keyCode==37){ //左
+            	onPrevPage();
+            }
+            if(e.keyCode==39){ //右
+            	onNextPage();
+            }
+        }; 
     </script>
-    </html>
+    </body>
+</html>
