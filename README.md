@@ -17,6 +17,10 @@
 2. pdf文件较小，使用js加载也不会太慢，用户可以等待几秒。
 3. doc文件预览之前需要转换为pdf或html（也许有js可以直接预览但我还不知道），可以选择每次预览都转html，也可以提前转pdf长期保存。
 
-DOC转换接口：http://api.xlongwei.com/doku.php?id=api:doc
+DOC转换接口：[Word转Pdf](http://api.xlongwei.com/doku.php?id=api:doc)，[Pdf图片印章](https://api.xlongwei.com/doku.php?id=api:pdf)
 
-PDF大文件预览效果：https://pdf.xlongwei.com/pdfjs.html#中国青少年科学探索百科全书.pdf
+PDF大文件预览效果：[Java核心卷一](https://pdf.xlongwei.com/pdfjs.html#Core.Java.Volume.I.Fundamentals.11th.Edition.pdf)
+
+PDF大文件CDN效果：[Java核心卷二](http://pdf.xlongwei.com/pdfjs.html#Core.Java.Volume.II.Advanced.Features.11th.Edition.pdf)
+
+PDF带书签预览效果：[redis](https://pdf.xlongwei.com/pdfobject.html#redis.pdf)
