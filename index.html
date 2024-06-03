@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>pdf.xlongwei.com</title>
+<title>xlongwei/pdf</title>
 <style type="text/css">
 tr {
 	text-align: left;
 }
 </style>
-<script src="https://s.xlongwei.com/res/js/umeditor1_2_2/third-party/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript">
 var sizePrecision = 2;
-var jsonpUrl = "https://b.xlongwei.com";
+var jsonpUrl = "http://115.28.229.158/jsonp/pdf";
 function td(book){
 	return !book ? "<td></td>" : "<td>"
 				+ (book.size < 1024000 ? ("<a target=\"_blank\" href=\"./pdfobject.html#"+book.name+"\" title=\"" + humanSize(book.size) + "\">" + book.name + "</a>")
 				: ("<a target=\"_blank\" href=\"./pdfjs.html#"+book.name+"\" title=\"" + humanSize(book.size) + "\">" + book.name + "</a>")
 				)
+			+ "&nbsp<sub><a target=\"_blank\" href=\"/tool/pdf/"+book.name+"\">⬇"+humanSize(book.size)+"</a></sub>"
 			+ "</td>";
 }
 function tr() {
@@ -60,12 +61,10 @@ function humanSize(s) {
 </script>
 </head>
 <body>
-<center>
-	<table>
+	<table style="margin:auto">
 		<tbody>
 		</tbody>
 	</table>
-</center>
 	<script type="text/javascript">
 		$.ajax({
 			url : jsonpUrl,
